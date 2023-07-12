@@ -64,10 +64,23 @@ const destroy = async (req, res) => {
   }
 }
 
+const supplierById = async (req, res, next, id) => {
+  try {
+    const supplier = await Supplier.findOne({id})
+    req.supplier = supplier
+    next()
+  } catch (err) {
+    return res.status(500).json({
+      error: dbErrorHandler.getErrorMessage(err)
+    })
+  }
+}
+
 export default {
   findAll,
   create,
   read,
   update,
-  destroy
+  destroy,
+  supplierById
 }

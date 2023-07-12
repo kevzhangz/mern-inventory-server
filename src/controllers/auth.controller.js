@@ -47,6 +47,7 @@ const signout = async (req, res, next) => {
 const checkSignin = expressjwt({
   secret: jwtsecret,
   algorithms: ["HS256"],
+  userProperty: 'auth'
 })
 
 export default {

@@ -8,6 +8,8 @@ import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
 import supplierRoutes from './routes/supplier.routes.js'
 import productRoutes from './routes/product.routes.js'
+import sellRoutes from './routes/sell.routes.js'
+import purchaseRoutes from './routes/purchase.routes.js'
 
 // setup process.env
 import dotenv from 'dotenv'
@@ -23,9 +25,6 @@ mongoose
 
 mongoose.Promise = global.Promise;
 
-// app.set('view engine', 'ejs');
-// app.set('views', __dirname + '/views');
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -35,12 +34,12 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(cors())
 
-// app.use(express.static(__dirname + '/public'));
-
 app.use('/', authRoutes);
 app.use('/', userRoutes);
 app.use('/', supplierRoutes);
 app.use('/', productRoutes);
+app.use('/', sellRoutes)
+app.use('/', purchaseRoutes)
 
 app.listen(port, () => {
   console.log(`Server running on port http://127.0.0.1:${port}`);

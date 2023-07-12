@@ -64,10 +64,23 @@ const destroy = async (req, res) => {
   }
 }
 
+const productById = async (req, res, next, id) => {
+  try {
+    const product = await Product.findOne({id})
+    req.product = product
+    next()
+  } catch (err) {
+    return res.status(500).json({
+      error: dbErrorHandler.getErrorMessage(err)
+    })
+  }
+}
+
 export default {
   findAll,
   create,
   read,
   update,
-  destroy
+  destroy,
+  productById
 }
