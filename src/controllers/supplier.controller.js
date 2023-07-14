@@ -1,6 +1,7 @@
 import dbErrorHandler from '../helpers/dbErrorHandler.js'
 import Supplier from '../models/supplier.model.js'
 import generator from '../helpers/generator.js'
+import extend from 'lodash/extend.js'
 
 const supplierProjections = {
   '_id': false,
@@ -48,6 +49,18 @@ const read = async (req, res) => {
 }
 
 const update = async (req, res) => {
+  try {
+    let supplier = req.supplier
+    supplier = extend(supplier, req.body)
+    await supplier.save()
+    return res.status(200).json({
+      messages: 'Successfully updated supplier'
+    })
+  } catch (err) {
+    return res.status(500).json({
+      error: dbErrorHandler.getErrorMessage(err)
+    })
+  }
 
 }
 

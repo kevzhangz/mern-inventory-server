@@ -39,7 +39,7 @@ const signin = async (req, res, next) => {
 
 const signout = async (req, res, next) => {
   res.clearCookie("t")
-  return res.status('200').json({
+  return res.status(200).json({
     message: "Signed out"
   })
 }

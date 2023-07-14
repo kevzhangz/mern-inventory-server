@@ -4,7 +4,7 @@ const SupplierSchema = new mongoose.Schema({
   id: String,
   name: String,
   address: String,
-  phone_number: Number
+  phone_number: String,
 })
 
 export default mongoose.model('Supplier', SupplierSchema)

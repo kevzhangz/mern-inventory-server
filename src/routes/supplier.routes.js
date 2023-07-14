@@ -12,4 +12,6 @@ router.route('/api/supplier/:id')
       .put(supplierCtrl.update)
       .delete(supplierCtrl.destroy)
 
+router.param('id', supplierCtrl.supplierById)
+
 export default router;
