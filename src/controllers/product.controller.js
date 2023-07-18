@@ -1,6 +1,7 @@
 import dbErrorHandler from '../helpers/dbErrorHandler.js'
 import Product from '../models/product.model.js'
 import generator from '../helpers/generator.js'
+import extend from 'lodash/extend.js'
 
 const productProjections = {
   '_id': false,
@@ -48,7 +49,18 @@ const read = async (req, res) => {
 }
 
 const update = async (req, res) => {
-
+  try {
+    let product = req.product
+    product = extend(product, req.body)
+    await product.save()
+    return res.status(200).json({ 
+      messages: 'Successfully updated product'
+    })
+  } catch (err) {
+    return res.status(500).json({
+      error: dbErrorHandler.getErrorMessage(err)
+    })
+  }
 }
 
 const destroy = async (req, res) => {

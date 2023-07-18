@@ -12,4 +12,6 @@ router.route('/api/product/:id')
       .put(productCtrl.update)
       .delete(productCtrl.destroy)
 
+router.param('id', productCtrl.productById)
+
 export default router;

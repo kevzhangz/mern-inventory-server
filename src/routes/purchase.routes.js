@@ -12,7 +12,13 @@ router.route('/api/purchase')
 router.route('/api/purchase/:supplierId/:productId')
       .post(authCtrl.checkSignin, purchaseCtrl.create)
 
+router.route('/api/purchase/:id')
+      .get(authCtrl.checkSignin, purchaseCtrl.read)
+      .put(authCtrl.checkSignin, purchaseCtrl.update)
+      .delete(authCtrl.checkSignin, purchaseCtrl.destroy)
+
 router.param('supplierId', supplierCtrl.supplierById)
 router.param('productId', productCtrl.productById)
+router.param('id', purchaseCtrl.purchaseById)
 
 export default router
