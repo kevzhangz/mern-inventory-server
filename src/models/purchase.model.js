@@ -2,9 +2,18 @@ import mongoose from 'mongoose'
 
 const PurchaseSchema = new mongoose.Schema({
   id: String,
-  date: Date,
-  stock: Number,
-  price: Number,
+  date: {
+    type: Date,
+    required: 'Sell Date is required'
+  },
+  stock: {
+    type: Number,
+    required: "Quantity is required"
+  },
+  price: {
+    type: Number,
+    required: "Price is required"
+  },
   supplier: {
     type: mongoose.Schema.ObjectId,
     ref: 'Supplier'
