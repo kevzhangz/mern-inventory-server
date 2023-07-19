@@ -13,7 +13,7 @@ const signin = async (req, res, next) => {
 
   if(!user || !user.authenticate(req.body.password)){
     return res.status(401).json({
-      error: 'Email or password not match'
+      error: 'Username or password not match'
     })
   }
 

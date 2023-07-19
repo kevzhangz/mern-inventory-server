@@ -1,16 +1,17 @@
 import express from 'express'
 import productCtrl from '../controllers/product.controller.js'
+import authCtrl from '../controllers/auth.controller.js'
 
 const router = express.Router()
 
 router.route('/api/product')
-      .get(productCtrl.findAll)
-      .post(productCtrl.create)
+      .get(authCtrl.checkSignin, productCtrl.findAll)
+      .post(authCtrl.checkSignin, productCtrl.create)
 
 router.route('/api/product/:id')
-      .get(productCtrl.read)
-      .put(productCtrl.update)
-      .delete(productCtrl.destroy)
+      .get(authCtrl.checkSignin, productCtrl.read)
+      .put(authCtrl.checkSignin, productCtrl.update)
+      .delete(authCtrl.checkSignin, productCtrl.destroy)
 
 router.param('id', productCtrl.productById)
 
