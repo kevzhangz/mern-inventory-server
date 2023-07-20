@@ -6,8 +6,10 @@ const router =  express.Router();
 router.route('/api/users')
       .post(userCtrl.create)
 
-router.route('/api/users/:username')
+router.route('/api/users/:userid')
       .get(authCtrl.checkSignin, userCtrl.read)
       .put(authCtrl.checkSignin, userCtrl.update)
+
+router.param('userid', userCtrl.userById)
 
 export default router;

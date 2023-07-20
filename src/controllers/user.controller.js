@@ -32,6 +32,14 @@ const read = async (req, res) => {
 const update = async (req, res) => {
   try {
     let user = req.profile
+
+    if(!user.authenticate(req.body.old_password)){
+      throw Error("Old password is wrong!")
+    }
+
+    req.body.password = req.body.new_password
+    req.body.new_password = undefined
+
     user = extend(user, req.body)
     user.updated = Date.now()
     await user.save()
@@ -45,10 +53,23 @@ const update = async (req, res) => {
   }
 }
 
+const userById = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userid)
+    req.profile = user
+    next()
+  } catch (err) {
+    return res.status(500).json({
+      error: errorHandler.getErrorMessage(err)
+    })
+  } 
+}
+
 
 
 export default {
   create,
   read,
-  update
+  update,
+  userById
 }
