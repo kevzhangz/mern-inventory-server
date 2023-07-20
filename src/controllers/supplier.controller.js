@@ -1,7 +1,8 @@
 import dbErrorHandler from '../helpers/dbErrorHandler.js'
-import Supplier from '../models/supplier.model.js'
 import generator from '../helpers/generator.js'
 import extend from 'lodash/extend.js'
+import Supplier from '../models/supplier.model.js'
+import Purchase from '../models/purchase.model.js'
 
 const supplierProjections = {
   '_id': false,
@@ -66,7 +67,12 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
   try {
-    await Supplier.deleteOne({id: req.params.id})
+    let supplier = await Supplier.findOne({id: req.params.id})
+
+    // Delete related purchase with the supplier
+    await Purchase.deleteMany({supplier: supplier._id})
+    await supplier.deleteOne()
+
     return res.status(200).json({
       messages: 'Successfully deleted supplier'
     })
